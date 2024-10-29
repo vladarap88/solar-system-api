@@ -58,6 +58,7 @@ def get_one_planet(planet_id):
         "distance": planet.distance,
     }
 
+
 @planets_bp.put("/<planet_id>")
 def update_planet(planet_id):
     planet = validate_planet(planet_id)
@@ -68,9 +69,15 @@ def update_planet(planet_id):
     planet.distance = request_body["distance"]
     db.session.commit()
 
-    return Response(status=204, mimetype="appliplanetion/json")
+    return Response(status=204, mimetype="application/json")
 
 
+@planets_bp.delete("/<planet_id>")
+def delete_planet(planet_id):
+    planet = validate_planet(planet_id)
+    db.session.delete(planet)
+    db.session.commit()
+    return Response(status=204, mimetype="application/json")
 
 
 def validate_planet(planet_id):
