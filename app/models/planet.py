@@ -1,9 +1,9 @@
 # class Planet:
-#     def __init__(self, id, name, description, distance_from_sun):
+#     def __init__(self, id, name, description, distance):
 #         self.id = id
 #         self.name = name
 #         self.description = description
-#         self.distance_from_sun = distance_from_sun
+#         self.distance = distance
 
 
 # planets_list = [
@@ -26,7 +26,7 @@ class Planet(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
     description: Mapped[str]
-    distance_from_sun: Mapped[int]
+    distance: Mapped[int]
 
     
 
