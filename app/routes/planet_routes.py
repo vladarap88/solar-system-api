@@ -89,7 +89,7 @@ def validate_planet(planet_id):
         response = {"message": f"planet {planet_id} invalid"}
         abort(make_response(response, 400))
 
-    query = db.select(planet).where(planet.id == planet_id)
+    query = db.select(Planet).where(Planet.id == planet_id)
     planet = db.session.scalar(query)
 
     if not planet:
