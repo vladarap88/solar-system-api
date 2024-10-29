@@ -27,3 +27,8 @@ class Planet(db.Model):
     name: Mapped[str]
     description: Mapped[str]
     distance_from_sun: Mapped[int]
+
+    
+
+
+

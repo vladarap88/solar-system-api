@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, make_response, request
-from .db import db
+from app.routes.db import db
 from app.models.planet import Planet
 
 
@@ -10,16 +10,22 @@ planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 def create_planet():
 
     request_body = request.get_json()
-    id = request_body["id"]
     name = request_body["name"]
     description = request_body["description"]
-    distance_from_sun = request_body["distance"]
+    distance_from_sun = request_body["distance_from_sun"]
 
     new_planet = Planet(name=name, description=description, distance_from_sun=distance_from_sun)
     db.session.add(new_planet)
     db.session.commit()
 
-    response = new_planet.to_dict()
+    # response = new_planet.to_dict()
+    response = {
+        "id": new_planet.id,
+        "name": new_planet.name,
+        "description": new_planet.description,
+        "distance_from_sun": distance_from_sun
+    }
+
     return response, 201
 
 
