@@ -1,7 +1,6 @@
 from flask import Blueprint, abort, make_response, request, Response
 from app.routes.db import db
 from app.models.planet import Planet
-from app.models.planet import Planet
 
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
