@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, make_response, request, Response
 from app.routes.db import db
-from app.models.planet import planet
+from app.models.planet import Planet
 
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
@@ -14,7 +14,7 @@ def create_planet():
     description = request_body["description"]
     distance = request_body["distance"]
 
-    new_planet = planet(name=name, description=description, distance=distance)
+    new_planet = Planet(name=name, description=description, distance=distance)
     db.session.add(new_planet)
     db.session.commit()
 
@@ -31,13 +31,13 @@ def create_planet():
 
 @planets_bp.get("")
 def get_all_planets():
-    query = db.select(planet).order_by(planet.id)
+    query = db.select(Planet).order_by(Planet.id)
     planets = db.session.execute(query).scalars()
 
     planets_response = [
         {
             "id": planet.id,
-            "name": planet.title,
+            "name": planet.name,
             "description": planet.description,
             "distance": planet.distance,
         }
@@ -87,7 +87,7 @@ def validate_planet(planet_id):
         response = {"message": f"planet {planet_id} invalid"}
         abort(make_response(response, 400))
 
-    query = db.select(planet).where(planet.id == planet_id)
+    query = db.select(Planet).where(Planet.id == planet_id)
     planet = db.session.scalar(query)
 
     if not planet:
