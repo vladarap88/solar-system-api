@@ -31,23 +31,45 @@ def create_planet():
     return response, 201
 
 
+# @planets_bp.get("")
+# def get_all_planets():
+#     query = db.select(Planet).order_by(Planet.id)
+#     planets = db.session.execute(query).scalars()
+
+#     planets_response = [
+#         {
+#             "id": planet.id,
+#             "name": planet.name,
+#             "description": planet.description,
+#             "distance_from_sun": planet.distance_from_sun,
+#         }
+#         for planet in planets
+#     ]
+
+#     return planets_response
+
 @planets_bp.get("")
 def get_all_planets():
-    query = db.select(Planet).order_by(Planet.id)
-    planets = db.session.execute(query).scalars()
+    query = db.select(Planet)
+    name_param = request.args.get("name")
 
-    planets_response = [
-        {
-            "id": planet.id,
-            "name": planet.name,
-            "description": planet.description,
-            "distance_from_sun": planet.distance_from_sun,
-        }
-        for planet in planets
-    ]
+    if name_param:
+        query = query.where(Planet.name == name_param)
 
+    description_param = request.args.get("description")
+    if description_param:
+        query = query.where(Planet.color.ilike(f"%{description_param}%"))
+
+    distance_from_sun_param = request.args.get("distance_from_sun")
+    if distance_from_sun_param:
+        query = query.where(Planet.personality.ilike(f"%{distance_from_sun_param}%"))
+
+    query = query.order_by(Planet.id)
+
+    planets = db.session.scalars(query)
+
+    planets_response = [planet.to_dict() for planet in planets]
     return planets_response
-
 
 @planets_bp.get("/<planet_id>")
 def get_one_planet(planet_id):
