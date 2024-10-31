@@ -58,11 +58,11 @@ def get_all_planets():
 
     description_param = request.args.get("description")
     if description_param:
-        query = query.where(Planet.color.ilike(f"%{description_param}%"))
+        query = query.where(Planet.description.ilike(f"%{description_param}%"))
 
     distance_from_sun_param = request.args.get("distance_from_sun")
     if distance_from_sun_param:
-        query = query.where(Planet.personality.ilike(f"%{distance_from_sun_param}%"))
+        query = query.where(Planet.distance_from_sun.ilike(f"%{distance_from_sun_param}%"))
 
     query = query.order_by(Planet.id)
 
