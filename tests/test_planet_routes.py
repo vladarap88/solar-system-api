@@ -7,7 +7,7 @@ def test_get_all_planets_with_no_records(client):
     assert response.status_code == 200
     assert response_body == []
 
-def test_get_one_panet_succeeds(client, two_saved_planets):
+def test_get_one_planet_succeeds(client, two_saved_planets):
     response = client.get("planets/1")
     response_body= response.get_json()
 
@@ -18,6 +18,13 @@ def test_get_one_panet_succeeds(client, two_saved_planets):
         "description": "The smallest and closest planet to the Sun",
         "distance_from_sun": 36
     }
+
+# def test_nonexistent_planet_return_404(client, two_saved_planets):
+#     response = client.get("planets/1")
+#     response_body= response.get_json()
+
+#     assert response.status_code == 404
+
 
 def test_create_one_planet_in_empty_db(client):
     response = client.post("/planets", json={
