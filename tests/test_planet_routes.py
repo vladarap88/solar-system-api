@@ -19,11 +19,11 @@ def test_get_one_planet_succeeds(client, two_saved_planets):
         "distance_from_sun": 36
     }
 
-# def test_nonexistent_planet_return_404(client, two_saved_planets):
-#     response = client.get("planets/1")
-#     response_body= response.get_json()
+def test_nonexistent_planet_return_404(client):
+     response = client.get("planets/1")
+     response_body= response.get_json()
 
-#     assert response.status_code == 404
+     assert response.status_code == 404
 
 
 def test_create_one_planet_in_empty_db(client):
