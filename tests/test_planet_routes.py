@@ -26,6 +26,7 @@ def test_nonexistent_planet_return_404(client):
     response_body = response.get_json()
 
     assert response.status_code == 404
+    assert response_body == {"message": f"planet 1 not found"}
 
 
 def test_create_one_planet_in_empty_db(client):
