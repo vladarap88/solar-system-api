@@ -20,13 +20,7 @@ def create_planet():
     db.session.add(new_planet)
     db.session.commit()
 
-    # response = new_planet.to_dict()
-    response = {
-        "id": new_planet.id,
-        "name": new_planet.name,
-        "description": new_planet.description,
-        "distance_from_sun": distance_from_sun,
-    }
+    response = new_planet.to_dict()
 
     return response, 201
 
@@ -57,12 +51,9 @@ def get_all_planets():
 def get_one_planet(planet_id):
     planet = validate_planet(planet_id)
 
-    return {
-        "id": planet.id,
-        "name": planet.name,
-        "description": planet.description,
-        "distance_from_sun": planet.distance_from_sun,
-    }
+    response = planet.to_dict()
+
+    return response
 
 
 @planets_bp.put("/<planet_id>")
