@@ -45,7 +45,7 @@ def get_all_planets():
     planets = db.session.scalars(query)
 
     planets_response = [planet.to_dict() for planet in planets]
-    return planets_response
+    return planets_response, 200
 
 @planets_bp.get("/<planet_id>")
 def get_one_planet(planet_id):
@@ -53,7 +53,7 @@ def get_one_planet(planet_id):
 
     response = planet.to_dict()
 
-    return response
+    return response, 200
 
 
 @planets_bp.put("/<planet_id>")
